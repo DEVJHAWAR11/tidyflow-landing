@@ -30,6 +30,95 @@
   --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+/*
+ * Light / dark. data-theme on <html> is set in index.html before first paint and toggled from the navbar.
+ *
+ * Light mode flips the shared tokens, so every `text-white`, `bg-white/[0.04]`, `bg-night`, `text-mist`… on the page
+ * follows without per-component branches: "white" becomes ink, "night" becomes paper. Hero colours (--h-*) are sampled
+ * from the hero artwork so its edges disappear into the page.
+ *
+ * .force-dark pins an element to the dark values: used for the recreation of TidyFlow's own (dark) app screen.
+ */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-white: #0b0d12;
+  --color-black: #e2d9d2;
+  --color-night: #f8f2ef;
+  --color-night-raised: #fffdfb;
+  --color-mist: #474c58;
+  --color-mist-dim: #6c707b;
+  --color-brand-bright: #1747e6;
+  --color-app-ok: #15803d;
+  --color-app-warn: #c2570c;
+  --page-grid: rgb(15 20 30 / 0.035);
+  --trail: #2f6fff;
+}
+
+.force-dark {
+  color-scheme: dark;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-night: #05060b;
+  --color-night-raised: #0b0d14;
+  --color-mist: #a4a9ba;
+  --color-mist-dim: #7d8396;
+  --color-brand-bright: #4ea1ff;
+  --color-app-ok: #4ade80;
+  --color-app-warn: #fb923c;
+}
+
+:root {
+  --page-grid: transparent;
+  --trail: #9fd0ff;
+}
+
+:root,
+.force-dark {
+  --h-bg: #07111e;
+  --h-ink: #ffffff;
+  --h-ink-2: rgb(255 255 255 / 0.8);
+  --h-muted: rgb(255 255 255 / 0.56);
+  --h-line: rgb(255 255 255 / 0.1);
+  --h-line-strong: rgb(255 255 255 / 0.24);
+  --h-accent: #2f6fff;
+  --h-solid-bg: #ffffff;
+  --h-solid-fg: #05060b;
+  --h-solid-hover: #e7e9ee;
+  --h-card-bg: rgb(9 15 27 / 0.82);
+  --h-card-border: rgb(130 160 210 / 0.26);
+  --h-ok: #4ade80;
+  --h-warn: #fb923c;
+  --h-chip-ok: #86efac;
+  --h-chip-ok-border: rgb(74 222 128 / 0.35);
+  --h-chip-ok-bg: rgb(74 222 128 / 0.07);
+  --h-chip: rgb(255 255 255 / 0.62);
+  --h-chip-border: rgb(255 255 255 / 0.16);
+  --h-nav-glass: rgb(5 6 11 / 0.78);
+}
+
+:root[data-theme='light'] {
+  --h-bg: #f8f2ef;
+  --h-ink: #0b0d12;
+  --h-ink-2: #3b404c;
+  --h-muted: #6c707b;
+  --h-line: rgb(15 20 30 / 0.1);
+  --h-line-strong: rgb(15 20 30 / 0.28);
+  --h-accent: #1747e6;
+  --h-solid-bg: #0b0d12;
+  --h-solid-fg: #ffffff;
+  --h-solid-hover: #262a33;
+  --h-card-bg: rgb(255 255 255 / 0.88);
+  --h-card-border: rgb(15 20 30 / 0.12);
+  --h-ok: #16a34a;
+  --h-warn: #e08600;
+  --h-chip-ok: #3b404c;
+  --h-chip-ok-border: rgb(15 20 30 / 0.14);
+  --h-chip-ok-bg: rgb(15 20 30 / 0.03);
+  --h-chip: #1747e6;
+  --h-chip-border: rgb(23 71 230 / 0.22);
+  --h-nav-glass: rgb(248 242 239 / 0.82);
+}
+
 @layer base {
   html {
     color-scheme: dark;
@@ -41,6 +130,16 @@
   body {
     @apply bg-night font-sans text-white antialiased;
     font-feature-settings: 'cv11', 'ss01';
+    /* Light mode sits on drafting paper, like the hero's sketch; dark mode keeps the starfield. */
+    background-image:
+      linear-gradient(var(--page-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--page-grid) 1px, transparent 1px);
+    background-size: 88px 88px;
+    background-position: center top;
+    transition: background-color 0.4s var(--ease-soft);
+  }
+  :root[data-theme='light'] .starfield {
+    display: none;
   }
 
   ::selection {
@@ -77,7 +176,7 @@
     line-height: 1.02;
   }
 
-  /* Pill buttons follow the app's DESIGN.md (marketing CTAs are fully rounded). */
+  /* Buttons are squared off to match the hero's drafting-table look. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -85,7 +184,7 @@
     gap: 0.55rem;
     height: 2.875rem;
     padding-inline: 1.35rem;
-    border-radius: 9999px;
+    border-radius: 0.3rem;
     font-weight: 600;
     font-size: 0.95rem;
     white-space: nowrap;
@@ -106,12 +205,12 @@
   }
 
   .btn-ghost {
-    color: white;
-    border: 1px solid rgb(255 255 255 / 0.16);
+    color: var(--color-white);
+    border: 1px solid color-mix(in srgb, var(--color-white) 18%, transparent);
   }
   .btn-ghost:hover {
-    background: rgb(255 255 255 / 0.06);
-    border-color: rgb(255 255 255 / 0.28);
+    background: color-mix(in srgb, var(--color-white) 6%, transparent);
+    border-color: color-mix(in srgb, var(--color-white) 30%, transparent);
   }
 
   .kbd {
@@ -121,7 +220,7 @@
     height: 1.3rem;
     padding-inline: 0.3rem;
     border-radius: 0.3rem;
-    border: 1px solid rgb(255 255 255 / 0.16);
+    border: 1px solid color-mix(in srgb, var(--color-white) 16%, transparent);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     color: var(--color-app-muted);
@@ -145,6 +244,136 @@
     opacity: 0;
     animation: fade-up 0.8s var(--ease-soft) forwards;
     animation-delay: var(--delay, 0ms);
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--h-bg);
+    color: var(--h-ink);
+    transition: background-color 0.4s var(--ease-soft);
+  }
+  /* A short fade at the bottom hands over to the night sky of the sections below. */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 5rem;
+    background: linear-gradient(to bottom, transparent, var(--color-night));
+    pointer-events: none;
+    z-index: 2;
+  }
+  @media (min-width: 64rem) {
+    .hero::after {
+      display: none;
+    }
+  }
+  /* Bottom of the artwork: melts into the hero on small screens; on large ones, into the page below. */
+  .hero-fade {
+    background: linear-gradient(to bottom, transparent, var(--h-bg));
+  }
+  @media (min-width: 64rem) {
+    .hero-fade {
+      background: linear-gradient(to bottom, transparent, var(--color-night));
+    }
+  }
+  /* Instrument Serif ships in one weight; a hairline stroke gives the headline the heavier cut of the design. */
+  .hero-title {
+    -webkit-text-stroke: 0.018em currentColor;
+  }
+
+  /*
+   * The artwork is a fixed-ratio scene, so it is scaled like object-fit: cover but anchored to the bottom right
+   * (where the wizard and the folders are). Overlays inside .hero-art are placed in % of the picture itself.
+   */
+  .hero-stage {
+    container-type: size;
+    overflow: hidden;
+  }
+  .hero-art {
+    --art-w: max(100cqw, 100cqh * 1.5978);
+    --art-h: max(100cqh, 100cqw / 1.5978);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--art-w);
+    height: var(--art-h);
+  }
+  .hero-art > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-art-enter {
+    animation: art-enter 1.8s var(--ease-soft) both;
+  }
+  .hero-scrim {
+    background: linear-gradient(90deg, var(--h-bg) 0%, var(--h-bg) 20%, transparent 40%);
+  }
+  /* Narrower than the artwork's ratio, the cover crop pulls the floating files under the copy: veil them more. */
+  @media (max-aspect-ratio: 3/2) {
+    .hero-scrim {
+      background: linear-gradient(
+        90deg,
+        var(--h-bg) 0%,
+        var(--h-bg) 28%,
+        color-mix(in srgb, var(--h-bg) 70%, transparent) 40%,
+        transparent 54%
+      );
+    }
+  }
+
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Corner brackets around the "messy folder" note. */
+  .brackets {
+    --c: var(--h-line-strong);
+    --s: 10px;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--s) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top left / 1px var(--s) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--s) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / 1px var(--s) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--s) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / 1px var(--s) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--s) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / 1px var(--s) no-repeat;
+  }
+
+  /* Square buttons used in the hero and the navbar. */
+  .btn-solid,
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    border-radius: 0.3rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s,
+      color 0.2s;
+  }
+  .btn-solid {
+    background: var(--h-solid-bg);
+    color: var(--h-solid-fg);
+  }
+  .btn-solid:hover {
+    background: var(--h-solid-hover);
+  }
+  .btn-outline {
+    color: var(--h-ink);
+    border: 1px solid var(--h-line-strong);
+    background: color-mix(in srgb, var(--h-bg) 55%, transparent);
+  }
+  .btn-outline:hover {
+    border-color: var(--h-ink);
   }
 
   /* The wizard */
@@ -186,7 +415,7 @@
     height: 1px;
     transform-origin: left;
     transform: scaleX(0);
-    background: linear-gradient(90deg, transparent, rgb(159 208 255 / 0.55));
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--trail) 60%, transparent));
   }
   .is-flying .flyby-wizard {
     animation: flyby 2.8s linear forwards;
@@ -245,6 +474,17 @@
   from {
     opacity: 0;
     transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes art-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.035);
   }
   to {
     opacity: 1;

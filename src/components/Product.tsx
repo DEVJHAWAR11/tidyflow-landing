@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Check } from './Icons'
-import { Container, Reveal, SectionHeading } from './ui'
+import { Accent, Container, Figure, Reveal, SectionHeading } from './ui'
 import { WizardLogo } from './WizardLogo'
 
 type CalloutId = 'confidence' | 'rules' | 'dupes' | 'rename' | 'edit' | 'apply'
@@ -47,7 +47,12 @@ export function Product() {
       <Container>
         <SectionHeading
           id="product-title"
-          title="See every decision before it happens."
+          eyebrow={{ n: '02', label: 'Review & Apply' }}
+          title={
+            <>
+              See every decision <Accent>before it happens.</Accent>
+            </>
+          }
           description="This is TidyFlow’s Review & Apply screen, rebuilt here with sample files. Pick a line to see where it lives on the screen."
         />
 
@@ -81,7 +86,9 @@ export function Product() {
           </Reveal>
 
           <Reveal delay={100} className="min-w-0">
-            <ReviewScreen focus={active} />
+            <Figure caption="Fig. 02 — TidyFlow's Review & Apply screen, sample files">
+              <ReviewScreen focus={active} />
+            </Figure>
           </Reveal>
         </div>
       </Container>
@@ -138,7 +145,7 @@ function ReviewScreen({ focus }: { focus: CalloutId }) {
     <div
       role="img"
       aria-label="TidyFlow's Review & Apply screen with sample files: summary counts, the AI Edit Assistant, a table of files with proposed categories, confidence scores, reasons, a near-duplicate tag and suggested renames, and the Apply bar with the Move files option unchecked."
-      className="mock overflow-hidden rounded-xl border border-app-border bg-app-bg text-white shadow-[0_30px_80px_-40px_rgb(0_0_0/0.9)]"
+      className="mock force-dark overflow-hidden rounded-md border border-app-border bg-app-bg text-white shadow-[0_30px_80px_-40px_rgb(0_0_0/0.9)]"
       data-focus={focus}
     >
       {/* App header */}

@@ -22,17 +22,47 @@ export function Reveal({ delay = 0, className = '', style, children, ...rest }: 
   )
 }
 
+/** Numbered sheet label, like the hero's badge: "■ 02 · Review & Apply ─────". */
+export function Eyebrow({ n, label, className = '' }: { n: string; label: string; className?: string }) {
+  return (
+    <p className={`mono-label flex items-center gap-3 text-[0.72rem] text-mist ${className}`}>
+      <span aria-hidden="true" className="size-2 shrink-0 bg-[var(--h-accent)]" />
+      <span className="text-white">{n}</span>
+      <span aria-hidden="true">·</span>
+      {label}
+      <span aria-hidden="true" className="ml-2 h-px max-w-40 flex-1 bg-white/[0.12]" />
+    </p>
+  )
+}
+
+/** The blue italic accent used in headlines ("On your terms."). */
+export function Accent({ children }: { children: ReactNode }) {
+  return <em className="text-[var(--h-accent)] italic">{children}</em>
+}
+
+/** A drafting-style frame: corner brackets around the content and a mono caption under it. */
+export function Figure({ caption, className = '', children }: { caption?: string; className?: string; children: ReactNode }) {
+  return (
+    <figure className={className}>
+      <div className="brackets relative p-2 sm:p-2.5">{children}</div>
+      {caption && <figcaption className="mono-label mt-2 px-2 text-[0.64rem] text-mist-dim">{caption}</figcaption>}
+    </figure>
+  )
+}
+
 type SectionHeadingProps = {
   id: string
   title: ReactNode
   description?: ReactNode
+  eyebrow?: { n: string; label: string }
   className?: string
 }
 
-export function SectionHeading({ id, title, description, className = '' }: SectionHeadingProps) {
+export function SectionHeading({ id, title, description, eyebrow, className = '' }: SectionHeadingProps) {
   return (
     <Reveal className={`max-w-2xl ${className}`}>
-      <h2 id={id} className="display text-[2.4rem] text-balance sm:text-[3.4rem]">
+      {eyebrow && <Eyebrow {...eyebrow} className="mb-6" />}
+      <h2 id={id} className="display text-[2.6rem] leading-[0.98] tracking-[-0.02em] text-balance sm:text-[3.8rem]">
         {title}
       </h2>
       {description && <p className="mt-4 text-base leading-relaxed text-pretty text-mist sm:text-lg">{description}</p>}
@@ -50,18 +80,26 @@ type DownloadButtonProps = {
   className?: string
   /** Where the button goes when the OS can't be detected. */
   unknownHref?: string
+  /** `solid` is the square black/white button used in the hero. */
+  variant?: 'primary' | 'solid'
+  iconClassName?: string
 }
 
 /** Primary CTA: picks the right build for the visitor's OS (see src/config/downloads.ts). */
-export function DownloadButton({ className = '', unknownHref = '#download' }: DownloadButtonProps) {
+export function DownloadButton({
+  className = '',
+  unknownHref = '#download',
+  variant = 'primary',
+  iconClassName = 'size-4',
+}: DownloadButtonProps) {
   const os = useOS()
   const option = os === 'unknown' ? undefined : findDownload(downloads.primary[os])
   const href = option ? downloadHref(option) : unknownHref
   const Icon = os === 'windows' ? Windows : os === 'macos' ? Apple : DownloadIcon
 
   return (
-    <a href={href} className={`btn btn-primary ${className}`}>
-      <Icon className="size-4" />
+    <a href={href} className={`${variant === 'solid' ? 'btn-solid' : 'btn btn-primary'} ${className}`}>
+      <Icon className={iconClassName} />
       {OS_LABEL[os]}
     </a>
   )

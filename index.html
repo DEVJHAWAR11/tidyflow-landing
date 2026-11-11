@@ -14,6 +14,18 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#05060b" />
+    <script>
+      // Pick the theme before first paint so the hero never flashes the wrong background.
+      ;(function () {
+        var t
+        try {
+          t = localStorage.getItem('tidyflow-theme')
+        } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        document.documentElement.dataset.theme = t
+        if (t === 'light') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f8f2ef')
+      })()
+    </script>
     <meta property="og:title" content="TidyFlow: AI file organizer" />
     <meta property="og:description" content="An AI file organizer that asks before it moves anything. Free and open source." />
 

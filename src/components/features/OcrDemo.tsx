@@ -55,7 +55,7 @@ export function OcrDemo() {
   return (
     <div ref={ref} className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
       {/* The "screenshot" being read */}
-      <div className="relative overflow-hidden rounded-lg border border-white/10 bg-[#141826] p-3.5" aria-hidden="true">
+      <div className="force-dark relative overflow-hidden rounded-lg border border-white/10 bg-[#141826] p-3.5 text-white" aria-hidden="true">
         <p className="mb-3 truncate font-mono text-[0.65rem] text-mist-dim">Screenshot 10.42.png</p>
         <div className="space-y-1.5 font-mono text-[0.7rem] text-white/55 [filter:blur(0.35px)]">
           {LINES.map((line) => (

@@ -48,7 +48,7 @@ export function DuplicateDemo() {
               </span>
               <span
                 className={`w-[6.5rem] shrink-0 rounded border py-0.5 text-center font-mono text-[0.66rem] ${
-                  status === 'unique' ? 'border-white/10 text-mist-dim' : 'border-[#dd5b00]/40 bg-[#4a1c07]/40 text-app-warn'
+                  status === 'unique' ? 'border-white/10 text-mist-dim' : 'border-app-warn/40 bg-app-warn/10 text-app-warn'
                 }`}
               >
                 {status === 'exact' ? 'Duplicate' : status === 'near' ? 'Near-duplicate' : 'Keep'}
