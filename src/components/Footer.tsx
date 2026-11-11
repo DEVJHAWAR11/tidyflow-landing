@@ -8,6 +8,7 @@ const COLUMNS = [
   {
     title: 'Product',
     links: [
+      { label: 'Review & Apply', href: '#product' },
       { label: 'Features', href: '#features' },
       { label: 'How it works', href: '#how-it-works' },
       { label: 'Download', href: '#download' },
@@ -33,12 +34,15 @@ export function Footer() {
               <WizardLogo className="w-9" />
               <span className="text-lg font-semibold tracking-tight">TidyFlow</span>
             </a>
+            <p className="display mt-4 max-w-xs text-[1.7rem] leading-tight">
+              Your files. In their place. <em className="text-[var(--h-accent)] italic">On your terms.</em>
+            </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-mist">{site.tagline}</p>
           </div>
 
           {COLUMNS.map((col) => (
             <nav key={col.title} aria-label={col.title}>
-              <h2 className="text-sm font-medium">{col.title}</h2>
+              <h2 className="mono-label text-[0.7rem] text-mist-dim">{col.title}</h2>
               <ul className="mt-3 space-y-2">
                 {col.links.map((l) => (
                   <li key={l.label}>
@@ -52,7 +56,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col-reverse items-start justify-between gap-3 border-t border-white/[0.07] pt-6 text-xs text-mist-dim sm:flex-row sm:items-center">
+        <div className="mono-label mt-12 flex flex-col-reverse items-start justify-between gap-3 border-t border-white/[0.07] pt-6 text-[0.66rem] text-mist-dim sm:flex-row sm:items-center">
           <p>
             © {YEAR} TidyFlow. Released under the {site.license} License.
           </p>

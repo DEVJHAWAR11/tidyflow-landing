@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { clamp, useReducedMotion } from '../lib/hooks'
-import { Container, Reveal, SectionHeading } from './ui'
+import { Accent, Container, Reveal, SectionHeading } from './ui'
 
 // Stage names follow the pipeline in TidyFlow's README.
 const STEPS = [
@@ -85,11 +85,16 @@ export function HowItWorks() {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
             id="how-title"
-            title="What happens to a folder."
+            eyebrow={{ n: '04', label: 'How it works' }}
+            title={
+              <>
+                What happens to <Accent>a folder.</Accent>
+              </>
+            }
             description="The same four steps run whether you use the web UI or the command line."
           />
           <Reveal delay={150} className="mt-10">
-            <h3 className="text-sm font-medium">From the command line</h3>
+            <h3 className="mono-label text-[0.72rem] text-mist">From the command line</h3>
             <dl className="mt-3 divide-y divide-white/[0.07] border-y border-white/[0.07]">
               {COMMANDS.map((c) => (
                 <div key={c.what} className="py-3">
@@ -107,7 +112,7 @@ export function HowItWorks() {
 
         <div className="relative">
           <div aria-hidden="true" className="absolute top-3 bottom-3 left-[0.6875rem] w-px bg-white/[0.1]">
-            <div ref={fillRef} className="h-full w-full origin-top bg-white/70" style={{ transform: 'scaleY(0)' }} />
+            <div ref={fillRef} className="h-full w-full origin-top bg-[var(--h-accent)]" style={{ transform: 'scaleY(0)' }} />
           </div>
           <ol ref={listRef} className="relative space-y-12">
             {STEPS.map((step, i) => (
@@ -121,19 +126,19 @@ export function HowItWorks() {
               >
                 <span
                   aria-hidden="true"
-                  className={`absolute top-1 left-0 grid size-[1.375rem] place-items-center rounded-full border font-mono text-[0.68rem] transition-colors duration-500 ${
-                    i <= active ? 'border-white bg-white text-night' : 'border-white/25 bg-night text-mist-dim'
+                  className={`absolute top-1 left-0 grid size-[1.375rem] place-items-center rounded-[3px] border font-mono text-[0.68rem] transition-colors duration-500 ${
+                    i <= active ? 'border-[var(--h-accent)] bg-[var(--h-accent)] text-[#fff]' : 'border-white/25 bg-night text-mist-dim'
                   }`}
                 >
                   {i + 1}
                 </span>
                 <Reveal>
-                  <h3 className="display text-[2rem]">
+                  <h3 className="display text-[2.2rem] leading-none tracking-[-0.015em]">
                     <span className="sr-only">Step {i + 1}: </span>
                     {step.title}
                   </h3>
                   <p className="mt-2 max-w-lg leading-relaxed text-mist">{step.body}</p>
-                  <p className="mt-3 font-mono text-xs text-mist-dim">{step.stages}</p>
+                  <p className="mono-label mt-3 text-[0.66rem] text-mist-dim">{step.stages}</p>
                 </Reveal>
               </li>
             ))}

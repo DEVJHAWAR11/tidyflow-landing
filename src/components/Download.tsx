@@ -3,7 +3,8 @@ import { downloadHref, downloads, type Platform } from '../config/downloads'
 import { site } from '../config/site'
 import { clamp, useOS, useReducedMotion } from '../lib/hooks'
 import type { OS } from '../lib/os'
-import { Container, DownloadButton, Reveal } from './ui'
+import { Accent, Container, DownloadButton, Eyebrow, Reveal } from './ui'
+import { Github } from './Icons'
 import { WizardLogo } from './WizardLogo'
 
 const DETECTED: Record<Platform, OS | null> = { windows: 'windows', macos: 'macos', source: null }
@@ -42,19 +43,29 @@ export function Download() {
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
           <Reveal>
-            <h2 id="download-title" className="display text-[2.4rem] text-balance sm:text-[3.4rem]">
-              Bring a little magic to your Downloads folder.
+            <Eyebrow n="05" label="Download" className="mb-6" />
+            <h2 id="download-title" className="display text-[2.6rem] leading-[0.98] tracking-[-0.02em] text-balance sm:text-[3.8rem]">
+              Bring a little magic to your <Accent>Downloads folder.</Accent>
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-mist sm:text-lg">
               TidyFlow is free and open source under the {site.license} license. For AI classification, add your own API key for
               DeepSeek, OpenAI, Groq, Gemini, OpenRouter or any OpenAI-compatible endpoint. Without one, it sorts by rules alone.
             </p>
 
-            <div className="mt-8">
-              <DownloadButton className="w-full sm:w-auto" unknownHref="#other-downloads" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <DownloadButton
+                variant="solid"
+                iconClassName="size-5"
+                className="h-[3.4rem] w-full px-8 text-[1.02rem] sm:w-auto"
+                unknownHref="#other-downloads"
+              />
+              <a href={site.repoUrl} className="btn-outline h-[3.4rem] px-8 text-[1.02rem]">
+                <Github className="size-5" />
+                View on GitHub
+              </a>
             </div>
 
-            <h3 id="other-downloads" className="mt-12 text-sm font-medium">
+            <h3 id="other-downloads" className="mono-label mt-12 text-[0.72rem] text-mist">
               All downloads
             </h3>
             <ul className="mt-3 divide-y divide-white/[0.07] border-y border-white/[0.07]">

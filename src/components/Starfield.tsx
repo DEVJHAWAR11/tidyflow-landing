@@ -70,5 +70,5 @@ export function Starfield() {
     }
   }, [])
 
-  return <canvas ref={ref} aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
+  return <canvas ref={ref} aria-hidden="true" className="starfield pointer-events-none fixed inset-0 -z-10 h-full w-full" />
 }

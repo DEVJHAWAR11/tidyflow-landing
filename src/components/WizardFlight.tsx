@@ -199,9 +199,9 @@ export function WizardFlight() {
               ref={(el) => {
                 messageRefs.current[i] = el
               }}
-              className={`display text-[2.1rem] text-balance will-change-transform sm:text-6xl ${i === 0 ? '' : 'absolute inset-x-4 top-0'} ${
-                i === 1 ? 'italic' : ''
-              }`}
+              className={`display text-[2.2rem] leading-none tracking-[-0.02em] text-balance will-change-transform sm:text-[4.2rem] ${
+                i === 0 ? '' : 'absolute inset-x-4 top-0'
+              } ${i === 1 ? 'text-[var(--h-accent)] italic' : ''}`}
             >
               {m}
             </p>
@@ -211,8 +211,8 @@ export function WizardFlight() {
         <svg ref={svgRef} aria-hidden="true" className="absolute inset-0 h-full w-full overflow-visible">
           <defs>
             <linearGradient id="trail-gradient" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stopColor="#9fd0ff" stopOpacity="0" />
-              <stop offset="1" stopColor="#9fd0ff" stopOpacity="0.7" />
+              <stop offset="0" style={{ stopColor: 'var(--trail)' }} stopOpacity="0" />
+              <stop offset="1" style={{ stopColor: 'var(--trail)' }} stopOpacity="0.7" />
             </linearGradient>
           </defs>
           <path ref={pathRef} fill="none" stroke="none" />
@@ -242,7 +242,7 @@ export function WizardFlight() {
                 data-state="messy"
                 className="group/chip absolute top-0 left-0 will-change-transform"
               >
-                <div className="flex items-center gap-1.5 rounded-md border border-white/10 bg-night-raised px-2 py-1 font-mono text-[0.62rem] whitespace-nowrap text-mist transition-[border-color,color] duration-300 group-data-[state=filed]/chip:text-white/90 group-data-[state=flying]/chip:border-white/40 group-data-[state=flying]/chip:text-white sm:px-2.5 sm:py-1.5 sm:text-xs">
+                <div className="flex items-center gap-1.5 rounded-[3px] border border-white/10 bg-night-raised px-2 py-1 font-mono text-[0.62rem] whitespace-nowrap text-mist transition-[border-color,color] duration-300 group-data-[state=filed]/chip:text-white/90 group-data-[state=flying]/chip:border-[var(--h-accent)] group-data-[state=flying]/chip:text-white sm:px-2.5 sm:py-1.5 sm:text-xs">
                   <Icon className="size-3 text-mist-dim sm:size-3.5" />
                   {f.name}
                 </div>
@@ -259,7 +259,7 @@ export function WizardFlight() {
                 folderRefs.current[i] = el
               }}
               data-full="false"
-              className="group/folder mx-auto flex w-full max-w-[13rem] items-center gap-2 rounded-lg border border-white/10 bg-night-raised px-2.5 py-2.5 transition-[border-color] duration-500 data-[full=true]:border-app-ok/40 sm:gap-3 sm:px-4 sm:py-3.5"
+              className="group/folder mx-auto flex w-full max-w-[13rem] items-center gap-2 rounded-[3px] border border-white/10 bg-night-raised px-2.5 py-2.5 transition-[border-color] duration-500 data-[full=true]:border-app-ok/40 sm:gap-3 sm:px-4 sm:py-3.5"
             >
               <Folder className="size-5 shrink-0 text-mist transition-colors group-data-[full=true]/folder:text-app-ok sm:size-6" />
               <div className="min-w-0">

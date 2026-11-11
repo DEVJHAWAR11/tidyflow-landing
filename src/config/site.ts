@@ -7,7 +7,7 @@ export const site = {
 }
 
 export const navLinks = [
+  { href: '#product', label: 'Review' },
   { href: '#features', label: 'Features' },
   { href: '#how-it-works', label: 'How it works' },
-  { href: '#download', label: 'Download' },
 ] as const

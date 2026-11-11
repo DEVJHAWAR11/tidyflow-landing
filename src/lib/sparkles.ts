@@ -11,6 +11,9 @@ type Particle = {
 }
 
 const COLORS = ['255,255,255', '214,232,255', '159,208,255']
+// White sparks vanish on light paper; in light mode the magic is ink-blue.
+const LIGHT_COLORS = ['23,71,230', '47,111,255', '110,150,255']
+const palette = () => (document.documentElement.dataset.theme === 'light' ? LIGHT_COLORS : COLORS)
 const MAX_PARTICLES = 220
 
 type EmitOptions = {
@@ -57,6 +60,7 @@ export class SparkleField {
   emit(x: number, y: number, { count = 1, vx = -60, vy = 10, spread = 40, jitter = 6 }: EmitOptions = {}) {
     for (let i = 0; i < count && this.particles.length < MAX_PARTICLES; i++) {
       const maxLife = 0.7 + Math.random() * 0.9
+      const colors = palette()
       this.particles.push({
         x: x + (Math.random() - 0.5) * jitter,
         y: y + (Math.random() - 0.5) * jitter,
@@ -65,7 +69,7 @@ export class SparkleField {
         life: maxLife,
         maxLife,
         size: 0.6 + Math.random() * 1.8,
-        color: COLORS[(Math.random() * COLORS.length) | 0],
+        color: colors[(Math.random() * colors.length) | 0],
         star: Math.random() < 0.12,
       })
     }

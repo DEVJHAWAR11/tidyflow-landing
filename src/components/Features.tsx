@@ -4,7 +4,7 @@ import { LayoutDemo } from './features/LayoutDemo'
 import { OcrDemo } from './features/OcrDemo'
 import { SafeCopyDemo } from './features/SafeCopyDemo'
 import { TriageDemo } from './features/TriageDemo'
-import { Container, Reveal, SectionHeading } from './ui'
+import { Accent, Container, Figure, Reveal, SectionHeading } from './ui'
 
 const FEATURES: { title: string; body: ReactNode; note?: ReactNode; demo: ReactNode }[] = [
   {
@@ -42,22 +42,36 @@ export function Features() {
       <Container>
         <SectionHeading
           id="features-title"
-          title="What it does to a messy folder."
+          eyebrow={{ n: '03', label: 'Features' }}
+          title={
+            <>
+              What it does to a <Accent>messy folder.</Accent>
+            </>
+          }
           description="Each of these runs here in your browser on sample files, so you can try it before installing anything."
         />
 
         <ol className="mt-14">
           {FEATURES.map((f, i) => (
-            <li key={f.title} className="border-t border-white/[0.08] py-12 first:border-t-0 first:pt-0 sm:py-16">
+            <li key={f.title} className="border-t border-white/[0.1] py-12 first:border-t-0 first:pt-0 sm:py-16">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
                 <Reveal className="lg:pt-2">
-                  <p className="font-mono text-xs text-mist-dim">{String(i + 1).padStart(2, '0')}</p>
-                  <h3 className="display mt-3 text-[2rem] sm:text-[2.4rem]">{f.title}</h3>
+                  <p className="mono-label flex items-center gap-2 text-[0.7rem] text-mist-dim">
+                    <span aria-hidden="true" className="text-[var(--h-accent)]">
+                      +
+                    </span>
+                    03.{i + 1}
+                  </p>
+                  <h3 className="display mt-3 text-[2.1rem] leading-none tracking-[-0.015em] sm:text-[2.6rem]">{f.title}</h3>
                   <p className="mt-4 leading-relaxed text-pretty text-mist">{f.body}</p>
                   {f.note && <p className="mt-4 font-mono text-xs text-mist-dim">{f.note}</p>}
                 </Reveal>
                 <Reveal delay={100} className="min-w-0">
-                  <div className="rounded-xl border border-white/[0.08] bg-night-raised p-4 sm:p-5">{f.demo}</div>
+                  <Figure caption={`Fig. 03.${i + 1} — try it here`}>
+                    <div className="rounded-md border border-white/[0.1] bg-night-raised p-4 shadow-[0_24px_60px_-40px_rgb(0_0_0/0.5)] sm:p-5">
+                      {f.demo}
+                    </div>
+                  </Figure>
                 </Reveal>
               </div>
             </li>
